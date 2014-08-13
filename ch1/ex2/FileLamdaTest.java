@@ -39,9 +39,20 @@ public class FileLamdaTest {
 	}
 	
 	@Test
-	public void test() {
+	public void testLamda() {
 		File now = new File("ch1/ex2/test");
-		File[] list = FileLamda.getSubDiectories(now.getPath());	
+		File[] list = FileLamda.getSubDiectoriesByLamda(now.getPath());	
+		File[] expected = getSubDiectories(now.getPath());
+	
+		assertNotNull(list);
+		assertEquals(3,list.length);
+		assertArrayEquals(expected,list);
+	}
+	
+	@Test
+	public void testMethod() {
+		File now = new File("ch1/ex2/test");
+		File[] list = FileLamda.getSubDiectoriesByMethod(now.getPath());	
 		File[] expected = getSubDiectories(now.getPath());
 	
 		assertNotNull(list);
