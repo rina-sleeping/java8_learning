@@ -7,10 +7,13 @@ import java.io.FileFilter;
 import java.util.ArrayList;
 import java.util.List;
 
+import org.junit.After;
+import org.junit.Before;
 import org.junit.Test;
 
 public class FileLamdaTest {
 
+	
 	private class FileFilterImplement implements FileFilter{
 		public boolean accept(File pathname){
 			return pathname.isDirectory();
@@ -37,6 +40,41 @@ public class FileLamdaTest {
 		}
 		return;
 	}
+	
+	
+	File dir,dirA,dirB,dirC;
+	File a,b,c;
+	
+	@Before
+	public void setUp() throws Exception {
+		this.dir = new File("ch1/ex2/test");
+		this.dirA = new File("ch1/ex2/test/a");
+		this.dirB = new File("ch1/ex2/test/a/b");
+		this.dirC = new File("ch1/ex2/test/a/c");
+		this.a =new File("ch1/ex2/test/a.txt");
+		this.b = new File("ch1/ex2/test/b.txt");
+		this.c = new File("ch1/ex2/test/a/c/c.txt");
+		
+		this.dir.mkdir();
+		this.dirA.mkdir();
+		this.dirB.mkdir();
+		this.dirC.mkdir();
+		this.a.createNewFile();
+		this.b.createNewFile();
+		this.c.createNewFile();
+	}
+
+	@After
+	public void tearDown() throws Exception {
+		a.delete();
+		b.delete();
+		c.delete();
+		dirC.delete();
+		dirB.delete();
+		dirA.delete();
+		dir.delete();
+	}
+
 	
 	@Test
 	public void testLamda() {
