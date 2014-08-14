@@ -11,26 +11,26 @@ public class FileLamdaTest {
 	
 	@Test
 	public void testLamda() {
-		File pwd = new File("ch1/ex3/test");
+		File dir = new File("ch1/ex3/test");
 		File a =new File("ch1/ex3/test/a.txt");
 		File b = new File("ch1/ex3/test/b.txt");
 		File c = new File("ch1/ex3/test/c.prn");
 		
 		try {
-			pwd.mkdir();
+			dir.mkdir();
 			a.createNewFile();
 			b.createNewFile();
 			c.createNewFile();
 			
 			File[] list;
-			list = FileLamda.getSubDiectoriesByLamda(pwd.getPath(),"txt");
+			list = FileLamda.getSubDiectoriesByLamda(dir.getPath(),"txt");
 			
 			assertNotNull(list);
 			assertEquals(2,list.length);
 			assertEquals(a,list[0]);
 			assertEquals(b,list[1]);
 			
-			list = FileLamda.getSubDiectoriesByLamda(pwd.getPath(),"prn");
+			list = FileLamda.getSubDiectoriesByLamda(dir.getPath(),"prn");
 			
 			assertNotNull(list);
 			assertEquals(1,list.length);
@@ -42,7 +42,7 @@ public class FileLamdaTest {
 			a.delete();
 			b.delete();
 			c.delete();
-			pwd.delete();
+			dir.delete();
 		}	
 	}
 }
