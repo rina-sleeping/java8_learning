@@ -1,0 +1,5 @@
+古いコードで既にStreamクラスとstreamメソッドを同じシグネチャで定義していた場合にはコンパイルエラーが発生する。
+streamに関するバイナリ互換性はある。
+
+互換性については以下のURLに細かく書いてある。
+http://www.oracle.com/technetwork/jp/java/javase/overview/8-compatibility-guide-2156366-ja.html#A999081
