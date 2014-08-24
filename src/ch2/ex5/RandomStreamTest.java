@@ -16,7 +16,7 @@ public class RandomStreamTest {
 
 		Stream<Long> random = RandomStream.createRamdomStream(a, c, m, 0);
 
-		Long[] result = random.limit(10).toArray(n -> new Long[n]);
+		Long[] result = random.limit(10).toArray(Long[]::new);
 
 		Long[] expected = new Long[10];
 		expected[0] = 0L;
