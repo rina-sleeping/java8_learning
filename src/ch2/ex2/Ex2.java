@@ -4,7 +4,7 @@ import java.util.stream.Stream;
 
 public class Ex2 {
 
-	public void Filter5() {
+	public void filter5() {
 		Stream<String> words = Stream.of("dfw", "1st_found", "2nd_found", "a",
 				"3rd_found", "bbb", "4th_found", "5th_found", "svaf",
 				"do_not_find");
@@ -18,6 +18,6 @@ public class Ex2 {
 	}
 
 	public static void main(String[] args) {
-		new Ex2().Filter5();
+		new Ex2().filter5();
 	}
 }
