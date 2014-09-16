@@ -1,0 +1,6 @@
+予約語なのでJava8でもライブラリにはできない。
+1.4でライブラリにならなかったのはライブラリにしてしまうと、実行時のオプションで動作を切り替えることができなくなるためだと思われる。
+
+参考情報：
+http://docs.oracle.com/cd/E19683-01/816-3973/6ma7ftaqt/index.html
+http://docs.oracle.com/javase/jp/1.5.0/guide/language/assert.html#design-faq
