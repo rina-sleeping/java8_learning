@@ -17,12 +17,10 @@ public class Ex7 {
 					.getDeclaredField("sourceSpliterator");
 			f.setAccessible(true);
 			Object splite = f.get(stream);
-			f.setAccessible(false);
 
 			Method mSize = splite.getClass().getMethod("getExactSizeIfKnown");
 			mSize.setAccessible(true);
 			Long size = (Long) mSize.invoke(splite);
-			mSize.setAccessible(false);
 
 			return size != -1;
 		} catch (NoSuchMethodException | SecurityException
