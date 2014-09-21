@@ -20,12 +20,10 @@ public class Ex11 {
 					.getDeclaredField("sourceSpliterator");
 			f.setAccessible(true);
 			Object splite = f.get(stream);
-			f.setAccessible(false);
 
 			Method mSize = splite.getClass().getMethod("getExactSizeIfKnown");
 			mSize.setAccessible(true);
 			size = (long) mSize.invoke(splite);
-			mSize.setAccessible(false);
 
 		} catch (NoSuchMethodException | SecurityException
 				| IllegalAccessException | IllegalArgumentException
