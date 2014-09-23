@@ -21,8 +21,7 @@ public class Ex8 {
 			// 一旦String型で保存しないといけない。ラムダ式内ではnames[i]で参照できない。
 			// 「Local variable i defined in an enclosing scope must be final or
 			// effectively final」と出る。
-			// System.out.println(i)も同様にエラーが出る。iがラムダ式外でも変更されているとp.13の制約にあったってしまう？
-			// ラムダ式では参照で値を保存するのだろうか？
+			// System.out.println(i)も同様にエラーが出る。iがラムダ式外でも変更されているとp.13の制約にあったっているらしい
 			runners2.add(() -> System.out.println(name));
 		}
 		for (Runnable runner : runners2)
