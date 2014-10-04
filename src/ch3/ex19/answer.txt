@@ -1,0 +1,5 @@
+p.76の説明にあるように戻り値型になっているUは変位しないので、? super U と宣言すべきではない。
+もし宣言したらBiFunction<? super U,? super T,U>なのでObjectを引数にもらって、Stringを返すような関数になってしまうが、
+そのような変換ができる保証がない。
+BiFunction<? super U,? super T,? super U>になったあBiFunctionに与える引数は作れるかもしれないが、reduce関数の戻り値型をUにする際に同様の問題が発生する。
+
