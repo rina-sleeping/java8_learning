@@ -9,7 +9,7 @@ public class Unchecker {
 			try {
 				runner.run();
 			} catch (Exception e) {
-				e.printStackTrace();
+				throw new RuntimeException(e);
 			}
 		};
 	}
@@ -19,7 +19,7 @@ public class Unchecker {
 			try {
 				caller.call();
 			} catch (Exception e) {
-				e.printStackTrace();
+				new RuntimeException(e);
 			}
 		};
 	}
