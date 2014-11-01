@@ -1,6 +1,7 @@
 package ch4.ex10;
 
 import javafx.application.Application;
+import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
@@ -14,17 +15,24 @@ import javafx.stage.Stage;
 public class Browser extends Application {
 
 	private String location = "http://horstmann.com";
+	private BorderPane bar;
+	private Label urlLabel;
+	private TextField url;
+	private Button back;
 
-	@Override
-	public void start(Stage stage) throws Exception {
-		BorderPane bar = new BorderPane();
-		Label urlLabel = new Label("URL");
-		TextField url = new TextField(location);
-		Button back = new Button("Back");
+	public Browser() {
+		bar = new BorderPane();
+		urlLabel = new Label("URL");
+		url = new TextField(location);
+		back = new Button("Back");
 
 		bar.setLeft(urlLabel);
 		bar.setCenter(url);
 		bar.setRight(back);
+
+		url.setId("url");
+
+		back.setId("back");
 
 		WebView browser = new WebView();
 		WebEngine engine = browser.getEngine();
@@ -39,9 +47,16 @@ public class Browser extends Application {
 
 		back.setOnMouseReleased(event -> {
 			engine.getHistory().go(-1);
-			;
+			url.setText(engine.getLocation());
 		});
+	}
 
+	public Parent getRoot() {
+		return bar;
+	}
+
+	@Override
+	public void start(Stage stage) throws Exception {
 		Scene scene = new Scene(bar);
 		stage.setScene(scene);
 		stage.show();
