@@ -43,18 +43,19 @@ public class TimeInterval {
 			return start.isEqual(compared.start);
 		}
 
-		if (compared.isPoint) {
-			LocalDateTime point = compared.start;
-			if (point.isBefore(start) || point.isAfter(end)
-					|| point.isEqual(end)) {
-				return false;
+		if (isPoint || compared.isPoint) {
+			LocalDateTime point;
+			TimeInterval interval;
+			if (compared.isPoint) {
+				point = compared.start;
+				interval = this;
+			} else {
+				point = start;
+				interval = compared;
 			}
-			return true;
-		}
 
-		if (isPoint) {
-			if (start.isBefore(compared.start) || start.isAfter(compared.end)
-					|| start.isEqual(compared.end)) {
+			if (point.isBefore(interval.start) || point.isAfter(interval.end)
+					|| point.isEqual(interval.end)) {
 				return false;
 			}
 			return true;
