@@ -42,7 +42,7 @@ class Scheduler {
 
 	/**
 	 * 
-	 * @param from
+	 * @param fromDateTime
 	 *            This LocalDateTime is treated with Scheduler's zoneId.
 	 * @return Instant is the most nearest schedule's time in the scheduler.
 	 *         Returned Instant is always after `from`. If scheduler has no

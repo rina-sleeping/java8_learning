@@ -1,6 +1,12 @@
 package ch5.ex12;
 
+import java.io.BufferedReader;
+import java.io.BufferedWriter;
+import java.io.File;
+import java.io.FileReader;
+import java.io.FileWriter;
 import java.io.IOException;
+import java.io.PrintWriter;
 import java.net.URL;
 import java.time.Duration;
 import java.time.Instant;
@@ -8,8 +14,6 @@ import java.time.LocalDateTime;
 import java.time.ZoneId;
 import java.time.ZonedDateTime;
 import java.util.ResourceBundle;
-import java.util.Timer;
-import java.util.TimerTask;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import java.util.regex.Matcher;
@@ -33,6 +37,9 @@ import javafx.stage.Modality;
 import javafx.stage.Stage;
 import javafx.stage.StageStyle;
 
+import org.reactfx.util.FxTimer;
+import org.reactfx.util.Timer;
+
 public class ScheduleTimer extends Application implements Initializable {
 	@FXML
 	private ListView<String> list;
@@ -55,7 +62,9 @@ public class ScheduleTimer extends Application implements Initializable {
 	private Button save;
 
 	private Scheduler sche = new Scheduler();
-	private Timer timer = new Timer();
+	private Timer timer = null;
+	private final String NO_NEXT_TIME = "--Žž--•ª";
+	private final String DATA_PATH = "src/ch5/ex12/schedules.txt";
 	private Logger log = Logger.getLogger("ch15/ex12/ScheduleTimer");
 
 	public void initialize(URL url, ResourceBundle rb) {
@@ -74,12 +83,13 @@ public class ScheduleTimer extends Application implements Initializable {
 		zoneId = ZoneId.systemDefault();
 		add.setOnAction(this::addSchedule);
 		del.setOnAction(this::delSchedule);
+		save.setOnAction(this::saveSchedule);
 		list.getSelectionModel().selectedItemProperty()
 				.addListener((property, oldValue, newValue) -> {
 					selectedList = newValue;
 				});
 
-		// TODO data load and add to sche
+		initSchedule();
 
 		Instant next = sche.nextFrom(LocalDateTime.now());
 		if (next != null) {
@@ -114,15 +124,26 @@ public class ScheduleTimer extends Application implements Initializable {
 		}
 
 		eList.add(tmp);
-		list.setItems(eList);
+		updateScheduleList();
 		sche.add(time, ZoneId.of(timeZone));
 
-		Instant next = sche.nextFrom(LocalDateTime.now());
-		if (next != null) {
-			nextTime.setText(next.toString());
+		setNextSchedule();
+	}
+
+	private void setNextSchedule() {
+		ZonedDateTime now = ZonedDateTime.now(zoneId);
+		Instant next = sche.nextFrom(now.toLocalDateTime().plusHours(1));
+
+		if (next == null) {
+			nextTime.setText(NO_NEXT_TIME);
+			return;
 		}
 
-		setTimer(next.atZone(zoneId).toLocalDateTime().minusHours(1));
+		nextTime.setText(next.toString());
+		setTimer(Duration.between(
+				now.toInstant(),
+				ZonedDateTime.of(next.atZone(zoneId).toLocalDateTime()
+						.minusHours(1), zoneId)).abs());
 
 	}
 
@@ -135,7 +156,7 @@ public class ScheduleTimer extends Application implements Initializable {
 		}
 
 		eList.remove(selectedList);
-		list.setItems(eList);
+		updateScheduleList();
 		sche.delete(parseTime(m.group(1)), ZoneId.of(m.group(2)));
 
 	}
@@ -167,29 +188,76 @@ public class ScheduleTimer extends Application implements Initializable {
 		return local;
 	}
 
-	private void save(ActionEvent e) {
+	private void setTimer(Duration duration) {
+		if (duration.isNegative()) {
+			duration = duration.abs();
+		}
 
+		log.log(Level.INFO, "set Timer:" + duration.toMillis() + "ms");
+		if (timer != null) {
+			timer.stop();
+		}
+		timer = FxTimer.runLater(
+				duration,
+				() -> {
+					setNextSchedule();
+					try {
+						Parent root = FXMLLoader.load(getClass().getResource(
+								"alarm.fxml"));
+						Scene scene = new Scene(root);
+						Stage alarmDialog = new Stage(StageStyle.UTILITY);
+						alarmDialog.setScene(scene);
+						alarmDialog.initModality(Modality.WINDOW_MODAL);
+						alarmDialog.show();
+					} catch (IOException ex) {
+						ex.printStackTrace();
+						System.exit(0);
+					}
+				});
 	}
 
-	private void setTimer(LocalDateTime setTime) {
-		Duration duration = Duration.between(Instant.now(),
-				ZonedDateTime.of(setTime, zoneId));
-		timer.schedule(new TimerTask() {
-			@Override
-			public void run() {
-				try {
-					Parent root = FXMLLoader.load(getClass().getResource(
-							"alarm.fxml"));
-					Scene scene = new Scene(root);
-					Stage alarmDialog = new Stage(StageStyle.UTILITY);
-					alarmDialog.setScene(scene);
-					alarmDialog.initModality(Modality.WINDOW_MODAL);
-					alarmDialog.show();
-				} catch (IOException ex) {
-					ex.printStackTrace();
-					System.exit(0);
+	private void saveSchedule(ActionEvent e) {
+		try {
+			PrintWriter w = new PrintWriter(new BufferedWriter(new FileWriter(
+					new File(DATA_PATH))));
+
+			eList.forEach(s -> {
+				w.println(s.toString());
+			});
+
+			w.close();
+		} catch (IOException e1) {
+			log.log(Level.SEVERE, e1.toString());
+
+		}
+	}
+
+	private void initSchedule() {
+		try {
+			BufferedReader r = new BufferedReader(new FileReader(new File(
+					DATA_PATH)));
+
+			for (String line = r.readLine(); line != null; line = r.readLine()) {
+				eList.add(line);
+
+				Matcher m = Pattern.compile("^(.+)\\sin\\s(.+)$").matcher(line);
+				if (!m.find()) {
+					log.log(Level.WARNING, line);
+					continue;
 				}
+
+				sche.add(parseTime(m.group(1)), ZoneId.of(m.group(2)));
 			}
-		}, duration.toMillis());
+			r.close();
+		} catch (IOException e) {
+			log.log(Level.SEVERE, e.toString());
+
+		}
+
+		updateScheduleList();
+	}
+
+	private void updateScheduleList() {
+		list.setItems(eList.sorted((s1, s2) -> s1.compareTo(s2)));
 	}
 }
