@@ -64,18 +64,27 @@ public class ScheduleTimer extends Application implements Initializable {
 
 	private Scheduler sche = new Scheduler();
 	private Timer timer = null;
+	private Instant next;
 	private final String NO_NEXT_TIME = "--Žž--•ª";
 	private final String DATA_PATH = "src/ch5/ex12/schedules.txt";
+	private final DateTimeFormatter formatter = DateTimeFormatter
+			.ofPattern("yyyy/MM/dd HH:mm");
 	private Logger log = Logger.getLogger("ch15/ex12/ScheduleTimer");
 
 	public void initialize(URL url, ResourceBundle rb) {
 		timeZone.setItems(FXCollections.observableArrayList(ZoneId
 				.getAvailableZoneIds()));
-		timeZone.getSelectionModel().selectedItemProperty()
-				.addListener((property, oldValue, newValue) -> {
-					zoneId = ZoneId.of(newValue);
-					sche.setZoneId(zoneId);
-				});
+		timeZone.getSelectionModel()
+				.selectedItemProperty()
+				.addListener(
+						(property, oldValue, newValue) -> {
+							zoneId = ZoneId.of(newValue);
+							sche.setZoneId(zoneId);
+							if (next != null) {
+								nextTime.setText(formatter.format(next
+										.atZone(zoneId)));
+							}
+						});
 		timeZone.setValue(ZoneId.systemDefault().toString());
 		zoneId = ZoneId.systemDefault();
 		addTimeZone.setItems(FXCollections.observableArrayList(ZoneId
@@ -92,9 +101,10 @@ public class ScheduleTimer extends Application implements Initializable {
 
 		initSchedule();
 
-		Instant next = sche.nextFrom(LocalDateTime.now());
+		next = sche.nextFrom(ZonedDateTime.now(zoneId).plusHours(1)
+				.toLocalDateTime());
 		if (next != null) {
-			nextTime.setText(next.toString());
+			nextTime.setText(formatter.format(next.atZone(zoneId)));
 		}
 	}
 
@@ -133,16 +143,13 @@ public class ScheduleTimer extends Application implements Initializable {
 
 	private void setNextSchedule() {
 		ZonedDateTime now = ZonedDateTime.now(zoneId);
-		Instant next = sche.nextFrom(now.toLocalDateTime().plusHours(1));
-
+		next = sche.nextFrom(now.plusHours(1).toLocalDateTime());
 		if (next == null) {
 			nextTime.setText(NO_NEXT_TIME);
 			return;
 		}
+		nextTime.setText(formatter.format(next.atZone(zoneId)));
 
-		System.out.println(next);
-		nextTime.setText(DateTimeFormatter.ofPattern("yyyy/MM/dd HH:mm")
-				.format(next.atZone(zoneId)));
 		setTimer(Duration.between(
 				now.toInstant(),
 				ZonedDateTime.of(next.atZone(zoneId).toLocalDateTime()
