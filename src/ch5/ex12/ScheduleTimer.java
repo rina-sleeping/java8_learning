@@ -13,6 +13,7 @@ import java.time.Instant;
 import java.time.LocalDateTime;
 import java.time.ZoneId;
 import java.time.ZonedDateTime;
+import java.time.format.DateTimeFormatter;
 import java.util.ResourceBundle;
 import java.util.logging.Level;
 import java.util.logging.Logger;
@@ -139,7 +140,9 @@ public class ScheduleTimer extends Application implements Initializable {
 			return;
 		}
 
-		nextTime.setText(next.toString());
+		System.out.println(next);
+		nextTime.setText(DateTimeFormatter.ofPattern("yyyy/MM/dd HH:mm")
+				.format(next.atZone(zoneId)));
 		setTimer(Duration.between(
 				now.toInstant(),
 				ZonedDateTime.of(next.atZone(zoneId).toLocalDateTime()
@@ -148,6 +151,9 @@ public class ScheduleTimer extends Application implements Initializable {
 	}
 
 	private void delSchedule(ActionEvent e) {
+		if (selectedList == null) {
+			return;
+		}
 		Matcher m = Pattern.compile("^(.+)\\sin\\s(.+)$").matcher(selectedList);
 
 		if (!m.find()) {
