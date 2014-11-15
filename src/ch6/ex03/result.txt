@@ -1,0 +1,3 @@
+AtomicLong					:522631996
+LongAdder by add()			:335796379
+LongAdder by increment()	:315417043
