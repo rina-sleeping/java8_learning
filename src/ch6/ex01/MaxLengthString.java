@@ -7,13 +7,13 @@ public class MaxLengthString {
 	AtomicReference<String> max = new AtomicReference<String>("");
 
 	public void update(String string) {
-		String old;
-		do {
-			old = max.get();
-			if (old.length() >= string.length()) {
-				return;
+		max.updateAndGet(s -> {
+			if (s.length() < string.length()) {
+				return string;
+			} else {
+				return s;
 			}
-		} while (max.compareAndSet(old, string));
+		});
 	}
 
 	public String getMaxLengthString() {
