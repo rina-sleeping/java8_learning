@@ -12,7 +12,7 @@ public class Ex1 {
 
 	public static int countWordsByForLoop() throws IOException {
 		String contents = new String(Files.readAllBytes(Paths
-				.get("./src/ch2/ex1/alice.txt")), StandardCharsets.UTF_8);
+				.get("./src/ch2/ex01/alice.txt")), StandardCharsets.UTF_8);
 		List<String> words = Arrays.asList(contents.split("[\\P{L}]+"));
 
 		int count = 0;
@@ -26,7 +26,7 @@ public class Ex1 {
 
 	public static int countWords() throws IOException {
 		String contents = new String(Files.readAllBytes(Paths
-				.get("./src/ch2/ex1/alice.txt")), StandardCharsets.UTF_8);
+				.get("./src/ch2/ex01/alice.txt")), StandardCharsets.UTF_8);
 		List<String> words = Arrays.asList(contents.split("[\\P{L}]+"));
 
 		// 単一カウンターを用いるとincrement毎に排他制御が必要なため、個々の結果を合算する
