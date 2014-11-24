@@ -1,0 +1,20 @@
+lenght=100000
+Arrays.parallelSort	:12703625
+Arrays.sort		:10923567
+----------------
+lenght=200000
+Arrays.parallelSort	:23195657
+Arrays.sort		:22363554
+----------------
+lenght=300000
+Arrays.parallelSort	:39701079
+Arrays.sort		:34231110
+----------------
+lenght=400000
+Arrays.parallelSort	:45905792
+Arrays.sort		:46019731
+----------------
+lenght=500000
+Arrays.parallelSort	:56728928
+Arrays.sort		:56809831
+----------------
