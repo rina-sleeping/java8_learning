@@ -19,7 +19,7 @@ public class RandomStreamTest {
 		Long[] result = random.limit(10).toArray(Long[]::new);
 
 		Long[] expected = new Long[10];
-		expected[0] = 0L;
+		expected[0] = c % m;
 		for (int i = 1; i < 10; i++)
 			expected[i] = (expected[i - 1] * a + c) % m;
 
