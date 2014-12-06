@@ -31,7 +31,7 @@ public class Ex8 {
 				end = System.nanoTime();
 				sum += end - start;
 			}
-			System.out.println("Arrays.parallelSort\t:" + sum / LOOP);
+			System.out.println("Arrays.parallelSort\t:" + sum / LOOP + "[ns]");
 
 			sum = 0;
 			for (int i = 0; i < LOOP; i++) {
@@ -42,7 +42,7 @@ public class Ex8 {
 				sum += end - start;
 			}
 
-			System.out.println("Arrays.sort\t\t:" + sum / LOOP);
+			System.out.println("Arrays.sort\t\t:" + sum / LOOP + "[ns]");
 
 			System.out.println("----------------");
 		}

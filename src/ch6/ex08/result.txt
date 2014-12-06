@@ -1,20 +1,20 @@
 lenght=100000
-Arrays.parallelSort	:12703625
-Arrays.sort		:10923567
+Arrays.parallelSort	:12208563[ns]
+Arrays.sort		:10458941[ns]
 ----------------
 lenght=200000
-Arrays.parallelSort	:23195657
-Arrays.sort		:22363554
+Arrays.parallelSort	:22162607[ns]
+Arrays.sort		:22395877[ns]
 ----------------
 lenght=300000
-Arrays.parallelSort	:39701079
-Arrays.sort		:34231110
+Arrays.parallelSort	:35662423[ns]
+Arrays.sort		:36128027[ns]
 ----------------
 lenght=400000
-Arrays.parallelSort	:45905792
-Arrays.sort		:46019731
+Arrays.parallelSort	:46362722[ns]
+Arrays.sort		:50024737[ns]
 ----------------
 lenght=500000
-Arrays.parallelSort	:56728928
-Arrays.sort		:56809831
+Arrays.parallelSort	:62153849[ns]
+Arrays.sort		:62930609[ns]
 ----------------
