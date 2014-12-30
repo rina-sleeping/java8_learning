@@ -1,4 +1,4 @@
-// Run as jjs < sortDisplay.js
+// Run as jjs < ex04.js
 
 var str = 'AAA BBBB'
 var s =  str.slice(4)

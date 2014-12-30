@@ -1,4 +1,4 @@
-// Run as jjs < sortDisplay.js
+// Run as jjs < ex05.js
 
 
 function factory(){ 
