@@ -1,0 +1,21 @@
+class java.lang.String
+Exception in thread "main" java.lang.ClassCastException: Cannot cast java.lang.C
+lass to java.lang.String
+        at java.lang.Class.cast(Class.java:3258)
+        at jdk.nashorn.internal.scripts.Script$ex04.runScript(ex04.js:6)
+        at jdk.nashorn.internal.runtime.ScriptFunctionData.invoke(ScriptFunction
+Data.java:498)
+        at jdk.nashorn.internal.runtime.ScriptFunction.invoke(ScriptFunction.jav
+a:206)
+        at jdk.nashorn.internal.runtime.ScriptRuntime.apply(ScriptRuntime.java:3
+78)
+        at jdk.nashorn.tools.Shell.apply(Shell.java:381)
+        at jdk.nashorn.tools.Shell.runScripts(Shell.java:310)
+        at jdk.nashorn.tools.Shell.run(Shell.java:166)
+        at jdk.nashorn.tools.Shell.main(Shell.java:130)
+        at jdk.nashorn.tools.Shell.main(Shell.java:109)
+        
+JavaScripの文字列(s)はjava.lang.String型だが、
+s.getCass()で戻ってきてるのはjava.lang.Classなので、java.lang.Stringにはキャストできない。
+
+        
