@@ -1,0 +1,15 @@
+問題の実行結果
+jjs> var b = new java.math.BigInteger('1234567890987654321')
+jjs> b
+1234567890987654400
+jjs> b.mod(java.math.BigInteger.TEN)
+1
+jjs>
+
+bで表示する際にはJavaScriptで表示するため、Number型に変換され情報が落ちてしまう。
+
+正しく表示する方法
+jjs> java.lang.String.format('%d',b)
+1234567890987654321
+jjs>
+
