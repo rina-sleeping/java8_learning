@@ -1,0 +1,7 @@
+short list
+stream		:30671845 [ns]
+stream		:24773330 [ns]
+long list
+stream		:105284750 [ns]
+stream		:124128416 [ns]
+
