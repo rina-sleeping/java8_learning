@@ -7,16 +7,16 @@ import java.nio.file.Paths;
 import java.util.stream.Stream;
 
 public class Walker {
-	public static Path[] search(String path, String... target)
+	public static Path[] search(String path, String... targets)
 			throws IOException {
 		try (Stream<Path> entries = Files.walk(Paths.get(path))) {
 			return entries.filter(p -> {
-				if (!p.toString().endsWith("java")) {
+				if (!p.toString().endsWith(".java")) {
 					return false;
 				}
 				try (Stream<String> lines = Files.lines(p)) {
 					return lines.anyMatch(line -> {
-						for (String t : target) {
+						for (String t : targets) {
 							if (line.contains(t)) {
 								return true;
 							}
