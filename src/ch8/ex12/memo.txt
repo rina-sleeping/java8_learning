@@ -1,0 +1,5 @@
+following step is how to complie.
+
+1. javac ch8/ex12/TestCase.java ch8/ex12/TestCases.java ch8/ex12/TestCaseProcessor.java
+4. javac -processor ch8.ex12.TestCaseProcessor ch8/ex12/TestCaseDemo.java
+
