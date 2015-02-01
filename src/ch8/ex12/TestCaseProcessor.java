@@ -19,7 +19,6 @@ public class TestCaseProcessor extends AbstractProcessor {
 	public boolean process(Set<? extends TypeElement> annotations,
 			RoundEnvironment roundEnv) {
 		for (TypeElement t : annotations) {
-			System.out.println(t.toString());
 			for (Element e : roundEnv.getElementsAnnotatedWith(t)) {
 				ClassLoader loader = this.getClass().getClassLoader();
 				try {
