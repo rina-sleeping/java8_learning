@@ -1,0 +1,6 @@
+aaa
+123
+nan
+22
+eeeeeeeeeeeee
+-0.99
