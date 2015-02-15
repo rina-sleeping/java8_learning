@@ -25,7 +25,12 @@ public class Ex06Test {
 		}
 
 		// test
-		Ex06.reverseLines(inputFile);
+		try {
+			Ex06.reverseLines(inputFile);
+		} catch (IOException e1) {
+			e1.printStackTrace();
+			fail("exception was occurred");
+		}
 
 		// verify
 		try {

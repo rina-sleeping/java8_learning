@@ -25,7 +25,12 @@ public class Ex05Test {
 		}
 
 		// test
-		Ex05.reverseWords(inputFile);
+		try {
+			Ex05.reverseWords(inputFile);
+		} catch (IOException e1) {
+			e1.printStackTrace();
+			fail("exception was occurred");
+		}
 
 		// verify
 		try {
