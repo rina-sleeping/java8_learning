@@ -14,10 +14,6 @@ public class Ex11 {
 		Path result = Paths.get("./src/ch9/ex11/result.txt");
 		Path tmp = Paths.get("./src/ch9/ex11/tmp.txt");
 
-		// for linux
-		// ProcessBuilder builder = new ProcessBuilder("grep", "-r",
-		// searchRootPath, "^[^0-9]*\d{4}-\d{4}-\d{4}-\d{4}[^0-9]*$");
-
 		ProcessBuilder builder = new ProcessBuilder(
 				"findstr",
 				"/s",
@@ -25,14 +21,9 @@ public class Ex11 {
 				"[0-9][0-9][0-9][0-9]-[0-9][0-9][0-9][0-9]-[0-9][0-9][0-9][0-9]-[0-9][0-9][0-9]",
 				searchRootPath + "/*");
 
-		// for linux
-		// builder.redirectOutput(result.toFile());
-
 		builder.redirectOutput(tmp.toFile());
 		Process process = builder.start();
 		process.waitFor();
-
-		// following is only for windows
 
 		List<String> lines = Files.readAllLines(tmp);
 
@@ -52,5 +43,18 @@ public class Ex11 {
 		}
 
 		Files.delete(tmp);
+	}
+
+	public static void searchCreditNumForLinux(String searchRootPath)
+			throws IOException, InterruptedException {
+		Path result = Paths.get("./src/ch9/ex11/result.txt");
+
+		ProcessBuilder builder = new ProcessBuilder("grep", "-r",
+				searchRootPath, "^[^0-9]*\\d{4}-\\d{4}-\\d{4}-\\d{4}[^0-9]*$");
+
+		builder.redirectOutput(result.toFile());
+
+		Process process = builder.start();
+		process.waitFor();
 	}
 }
