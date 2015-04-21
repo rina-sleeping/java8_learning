@@ -44,7 +44,7 @@ import javafx.stage.StageStyle;
 import org.reactfx.util.FxTimer;
 import org.reactfx.util.Timer;
 
-public class ScheduleTimer extends Application implements Initializable {
+public class ScheduleTimerClock extends Application implements Initializable {
 	@FXML
 	private ListView<String> list;
 	private String selectedList;
