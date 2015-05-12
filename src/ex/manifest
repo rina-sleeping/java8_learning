@@ -1,0 +1,4 @@
+Manifest-Version: 1.0
+Main-Class: ex.ScheduleTimerClock
+Class-Path: ./reactfx-1.4.jar
+

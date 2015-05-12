@@ -71,10 +71,10 @@ public class ScheduleTimerClock extends Application implements Initializable {
 	private Timer timer = null;
 	private Instant next;
 	private final String NO_NEXT_TIME = "--Žž--•ª";
-	private final String DATA_PATH = "src/ch5/ex12/schedules.txt";
+	private final String DATA_PATH = "src/ex/schedules.txt";
 	private final DateTimeFormatter formatter = DateTimeFormatter
 			.ofPattern("yyyy/MM/dd HH:mm");
-	private Logger log = Logger.getLogger("ch15/ex12/ScheduleTimer");
+	private Logger log = Logger.getLogger("ex/ScheduleTimer");
 
 	public void initialize(URL url, ResourceBundle rb) {
 		timeZone.setItems(FXCollections.observableArrayList(ZoneId
@@ -128,7 +128,7 @@ public class ScheduleTimerClock extends Application implements Initializable {
 	public void start(Stage stage) throws Exception {
 		try {
 			Parent root = FXMLLoader.load(getClass().getResource(
-					"scheduler.fxml"));
+					"/ex/scheduler.fxml"));
 			stage.setScene(new Scene(root));
 			stage.show();
 		} catch (IOException ex) {
@@ -136,6 +136,10 @@ public class ScheduleTimerClock extends Application implements Initializable {
 			System.exit(0);
 		}
 
+	}
+
+	public static void main(String[] args) {
+		launch(args);
 	}
 
 	private void addSchedule(ActionEvent e) {
